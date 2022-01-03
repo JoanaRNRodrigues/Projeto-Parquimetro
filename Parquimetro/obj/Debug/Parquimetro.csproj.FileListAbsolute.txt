@@ -5,3 +5,10 @@ C:\Users\belez\OneDrive\Área de Trabalho\Front End Developer\C#\Curso Requalifi
 C:\Users\belez\OneDrive\Área de Trabalho\Front End Developer\C#\Curso Requalificar .Net\Trabalhos curso\Projeto entregar dia 7 janeiro\Parquimetro\Parquimetro\bin\Debug\Parquimetro.pdb
 C:\Users\belez\OneDrive\Área de Trabalho\Front End Developer\C#\Curso Requalificar .Net\Trabalhos curso\Projeto entregar dia 7 janeiro\Parquimetro\Parquimetro\obj\Debug\Parquimetro.exe
 C:\Users\belez\OneDrive\Área de Trabalho\Front End Developer\C#\Curso Requalificar .Net\Trabalhos curso\Projeto entregar dia 7 janeiro\Parquimetro\Parquimetro\obj\Debug\Parquimetro.pdb
+C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\bin\Debug\Parquimetro.exe.config
+C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\bin\Debug\Parquimetro.exe
+C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\bin\Debug\Parquimetro.pdb
+C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.csprojAssemblyReference.cache
+C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.csproj.CoreCompileInputs.cache
+C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.exe
+C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.pdb
