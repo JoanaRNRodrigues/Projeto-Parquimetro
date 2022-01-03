@@ -14,21 +14,21 @@ namespace Parquimetro
 
             //Console.WriteLine(Menu("Bem vindo", "Administrador", "Cliente", "Voltar"));
             //Console.ReadKey();
-            string[] MainMenu = {"Administrador", "Cliente", "Opções", "voltar"};
-            string[] MenuTitle = {"Bem Vindo", "Administrador", "Cliente"};
-            Console.WriteLine(Menu ("Bem Vindo", MainMenu));
+            string[] MainMenuOptions = {"Administrador", "Cliente", "OpÃ§Ãµes", "voltar"};
+            string MainMenu = Menu("Bem Vindo", MainMenuOptions);
+            Console.WriteLine(MainMenu);
             Console.ReadLine();
           
         }
 
-        static string Menu (string title, string[] options )        //função que devolve os menus
+        static string Menu (string title, string[] options )        //funï¿½ï¿½o que devolve os menus
         {
             string MenuType = "";
-            MenuType += " ___________________________________\n" +           // \n é para escrever na linha abaixo/nova linha
+            MenuType += " ___________________________________\n" +           // \n Ã© para escrever na linha abaixo/nova linha
                         "|                                   |\n" +
-                        $"|------    {title}";                          // O sinal $ serve para adicionar rapidamente um variavel à string
+                        $"|------    {title}";                          // O sinal $ serve para adicionar rapidamente um variavel a string
 
-            for (int k = 0; k <= 18-title.Length; k++)                  // adiona espaços para alinhar a barra da direita       // dei valor 0 porque escolhi como parametro assumir que o numero de caracteres do "valor" da opção fosse 0.
+            for (int k = 0; k <= 18-title.Length; k++)                  // adiona espaÃ§os para alinhar a barra da direita       // dei valor 0 porque escolhi como parametro assumir que o numero de caracteres do "valor" da opï¿½ï¿½o fosse 0.
             {
                 MenuType += " ";
 
@@ -36,11 +36,11 @@ namespace Parquimetro
             MenuType += "------|\n";
         
 
-            for (int i = 0; i < options.Length; i++)                    // i é o indice das opções
+            for (int i = 0; i < options.Length; i++)                    // i Ã© o indice das opï¿½ï¿½es
             {
-                MenuType += $"|          {i+1}.{options[i]}";    // imprime o número da opção e o "valor" da opção   
+                MenuType += $"|          {i+1}.{options[i]}";    // imprime o nï¿½mero da opï¿½ï¿½o e o "valor" da opÃ§Ãµo   
                 
-                for (int j = 0; j <= 22-options[i].Length; j++)         // adiona espaços para alinhar a barra da direita       // dei valor 0 porque escolhi como parametro assumir que o numero de caracteres do "valor" da opção fosse 0.
+                for (int j = 0; j <= 22-options[i].Length; j++)         // adiona espaï¿½os para alinhar a barra da direita       // dei valor 0 porque escolhi como parametro assumir que o numero de caracteres do "valor" da opï¿½ï¿½o fosse 0.
                 {
                 MenuType += " ";
                 }
