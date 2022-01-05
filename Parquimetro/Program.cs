@@ -11,19 +11,52 @@ namespace Parquimetro
         static void Main(string[] args)
         {
 
+          
+            double[] coins = { 2.0, 1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01 };     //tipos de moedas
 
-            
-            string[] MainMenuOptions = {"Administrador", "Cliente", "Opções", "voltar"};
+            string[] MainMenuOptions = { "Administrador", "Cliente", "Sair" };
             string[] ClientMenuOptions = { "Estacionar", "Ver Zonas", "Histórico", "Voltar" };
             string[] AdminMenuOptions = { "Ver Zonas", "Histórico", "Ver Máquinas", "Voltar" };
 
             string ClientMenu = Menu("Cliente", ClientMenuOptions);
-            string AdminMenu = Menu("Cliente", AdminMenuOptions);
+            string AdminMenu = Menu("Administrador", AdminMenuOptions);
             string MainMenu = Menu("Bem Vindo", MainMenuOptions);
 
-            Console.WriteLine(MainMenu);
-            Console.ReadLine();
+            int userChoice = 1; 
+
+
+            //ESTRUTURA DE FUNCIONAMENTO DO PARQUIMTRO/MENUS:
+
+            while (userChoice != MainMenuOptions.Length)
+            {
+                Console.WriteLine(MainMenu);
+                userChoice = int.Parse(Console.ReadLine());
+
+                if (userChoice == 1)
+                {
+                    while (userChoice != AdminMenuOptions.Length)
+                    {
+                        Console.WriteLine(AdminMenu);
+                        userChoice = int.Parse(Console.ReadLine());
+                    }
+                    userChoice = 0;         //Damos esta opção para evitar que a opção de saida do Menu seja igual à opção de saida do Programa. 
+                }
+                else if (userChoice ==2)
+                {
+                    while (userChoice != ClientMenuOptions.Length)
+                    {
+                        Console.WriteLine(ClientMenu);
+                        userChoice = int.Parse(Console.ReadLine());
+                    }
+                    userChoice = 0;
+                }
+               // Continuar o resto dos submenus
+            }
+
+
           
+
+            
         }
 
         static string Menu (string title, string[] options )        //função que devolve os menus

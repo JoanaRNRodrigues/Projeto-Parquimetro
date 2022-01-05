@@ -92,51 +92,52 @@ void giveChange(double change)
 
     Console.WriteLine("Your total change is" + change);
 
+
     while (change > 0)                                       //enquanto o valor a dar pela máquina for maior do que 0, vai se verificar que moeda devolver, consoante o stock da máquina)
     {
-        if (change > coins[0] & stockCoins[0] > 0)
+        if (change >= coins[0] & stockCoins[0] > 0)
         {
             Console.WriteLine("2€");
             change = change - coins[0];
             stockCoins[0]--;
         }
-        else if (change > coins[1] & stockCoins[1] > 0)
+        else if (change >= coins[1] & stockCoins[1] > 0)
         {
             Console.WriteLine("1€");
             change = change - coins[1];
             stockCoins[1]--;
         }
-        else if (change > coins[2] & stockCoins[2] > 0)
+        else if (change >= coins[2] & stockCoins[2] > 0)
         {
             Console.WriteLine("50 cents");
             change = change - coins[2];
             stockCoins[2]--;
         }
-        else if (change > coins[3] & stockCoins[3] > 0)
+        else if (change >= coins[3] & stockCoins[3] > 0)
         {
             Console.WriteLine("20 cents");
             change = change - coins[3];
             stockCoins[3]--;
         }
-        else if (change > coins[4] & stockCoins[4] > 0)
+        else if (change >= coins[4] & stockCoins[4] > 0)
         {
             Console.WriteLine("10 cents");
             change = change - coins[4];
             stockCoins[4]--;
         }
-        else if (change > coins[5] & stockCoins[5] > 0)
+        else if (change >= coins[5] & stockCoins[5] > 0)
         {
             Console.WriteLine("5 cents");
             change = change - coins[5];
             stockCoins[5]--;
         }
-        else if (change > coins[6] & stockCoins[6] > 0)
+        else if (change >= coins[6] & stockCoins[6] > 0)
         {
             Console.WriteLine("2 cents");
             change = change - coins[6];
             stockCoins[6]--;
         }
-        else if (change > coins[7] & stockCoins[7] > 0)
+        else if (change >= coins[7] & stockCoins[7] > 0)
         {
             Console.WriteLine("1 cents");
             change = change - coins[7];
