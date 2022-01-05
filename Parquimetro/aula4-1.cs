@@ -219,55 +219,75 @@ void zoneTime(double change, int zone)
         exitMinute -= 60 * hours;
     }
 
+    
     if (exitHour >= 20 & currentTime[5] <= 5 || exitHour >= 14 & currentTime[5] == 6)
     {
-        int excessHours = exitHour - 20;
-        exitDay++;
-        weekDay++;
-
-        while (excessHours > 0)
+        if (zone < 2)
         {
-            while (weekDay <= 5)
+            Console.WriteLine("20h00 " + exitDay + "/" + exitMonth + "/" + currentTime[4]); // adaptar ao menu ou alterar o retorno para array
+        }
+        else
+        {
+            int excessHours = exitHour - 20;
+            if (excessHours == 0)
             {
-                if (excessHours >= 11)
-                {
-                    excessHours -= 11;
-                    weekDay++;
-                    exitDay++;
-                }
-                else
-                {
-                    exitHour = 9 + excessHours;
-                    excessHours = 0;
-                    break;
-                }
+                exitHour = 9;
+            }
+            exitDay++;
+            weekDay++;
 
-            }
-            if (weekDay == 6 & excessHours > 0)
+            while (excessHours > 0)
             {
-                if (excessHours >= 5)
+                while (weekDay <= 5)
                 {
-                    excessHours -= 5;
-                    exitDay += 2;
-                    weekDay = 1;
+                    if (excessHours >= 11)
+                    {
+                        excessHours -= 11;
+                        weekDay++;
+                        exitDay++;
+                    }
+                    else
+                    {
+                        exitHour = 9 + excessHours;
+                        excessHours = 0;
+                        break;
+                    }
+
                 }
-                else
+                if (weekDay == 6 & excessHours > 0)
                 {
-                    exitHour = 9 + excessHours;
-                    excessHours = 0;
+                    if (excessHours >= 5)
+                    {
+                        excessHours -= 5;
+                        exitDay += 2;
+                        weekDay = 1;
+                    }
+                    else
+                    {
+                        exitHour = 9 + excessHours;
+                        excessHours = 0;
+                    }
                 }
-            }
+        }
         }
     }
-    int[] daysMonth = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    while (exitDay > daysMonth[exitMonth])
+    else
     {
-        exitDay -= daysMonth[exitMonth];
-        exitMonth += 1;
-
+        Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime[4]);
     }
-    Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime[4]); // adaptar ao menu ou alterar o retorno para array
+    if (zone == 2)
+    { 
+        int[] daysMonth = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        while (exitDay > daysMonth[exitMonth])
+        {
+            exitDay -= daysMonth[exitMonth];
+            exitMonth += 1;
+
+        }
+        Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime[4]); // adaptar ao menu ou alterar o retorno para array
+    }
+    
 
 }
 
-zoneTime(60, 2);
+zoneTime(1, 1);
