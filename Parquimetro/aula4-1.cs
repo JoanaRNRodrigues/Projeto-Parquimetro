@@ -52,11 +52,6 @@ static string Menu(string title, string[] options)        //função que devolve
 
 
 
-
-
-
-
-
 static int[] Time()
 {
 
@@ -143,6 +138,7 @@ void giveChange(double change)
             change = change - coins[7];
             stockCoins[7]--;
         }
+
     }
 
 }
@@ -180,86 +176,6 @@ int zone;
 
 double change = 12.0;
 
-void zoneTime(double change, int zone)
-{
-    double parkingMinutes = minutesCount(change, zone);
-    int[] currentTime = Time();
-
-    int currentHour = currentTime[0];
-    int currentMinute = currentTime[1];
-
-    int exitMinute = (int)Math.Round(parkingMinutes) + currentMinute;
-    int exitHour = currentHour;
-    
-    int exitDay = currentTime[2];
-    int weekDay = currentTime[5];
-    int exitMonth = currentTime[3];
-
-    if (exitMinute >= 60)
-    {
-        int hours=exitMinute/60;
-        exitHour = currentHour + hours;
-        exitMinute -= 60 * hours;
-    }
-
-    if (exitHour >= 20 & currentTime[5]<=5 || exitHour >= 14 & currentTime[5] == 6)
-    {
-        int excessHours = exitHour - 20;
-        exitDay++;
-        weekDay++;
-
-        while (excessHours > 0)
-        {
-            while (weekDay <= 5)
-            {
-                if (excessHours >= 11)
-                {
-                    excessHours -= 11;
-                    weekDay++;
-                    exitDay++;
-                }
-                else
-                {
-                    exitHour = 9 + excessHours;
-                    excessHours = 0;
-                    weekDay += 2;
-                }
-                
-            }
-            if (weekDay == 6  & excessHours > 0)
-            { 
-                if (excessHours >= 5)
-                {
-                    excessHours -= 5;
-                    exitDay += 2;
-                    weekDay = 0;
-                }
-                else
-                {
-                    exitHour = 9 + excessHours;
-                    excessHours = 0 ;
-                    
-                }
-                
-            }
-
-            
-        }
-        
-
-    }
-    int[] daysMonth = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    while (exitDay > daysMonth[exitMonth])
-    {
-        exitDay -= daysMonth[exitMonth];
-        exitMonth+=1;
-
-    }
-    Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime[4]); // adaptar ao menu ou alterar o retorno para array
-
-}
-
-
 double minutesCount(double change, int zone)
 {
     double[] maxChange = { 0.86, 2, -1 };
@@ -280,4 +196,78 @@ double minutesCount(double change, int zone)
         return minutesParking;
     }
 }
+
+void zoneTime(double change, int zone)
+{
+    double parkingMinutes = minutesCount(change, zone);
+    int[] currentTime = Time();
+
+    int currentHour = currentTime[0];
+    int currentMinute = currentTime[1];
+
+    int exitMinute = (int)Math.Round(parkingMinutes) + currentMinute;
+    int exitHour = currentHour;
+
+    int exitDay = currentTime[2];
+    int weekDay = currentTime[5];
+    int exitMonth = currentTime[3];
+
+    if (exitMinute >= 60)
+    {
+        int hours = exitMinute / 60;
+        exitHour = currentHour + hours;
+        exitMinute -= 60 * hours;
+    }
+
+    if (exitHour >= 20 & currentTime[5] <= 5 || exitHour >= 14 & currentTime[5] == 6)
+    {
+        int excessHours = exitHour - 20;
+        exitDay++;
+        weekDay++;
+
+        while (excessHours > 0)
+        {
+            while (weekDay <= 5)
+            {
+                if (excessHours >= 11)
+                {
+                    excessHours -= 11;
+                    weekDay++;
+                    exitDay++;
+                }
+                else
+                {
+                    exitHour = 9 + excessHours;
+                    excessHours = 0;
+                    break;
+                }
+
+            }
+            if (weekDay == 6 & excessHours > 0)
+            {
+                if (excessHours >= 5)
+                {
+                    excessHours -= 5;
+                    exitDay += 2;
+                    weekDay = 1;
+                }
+                else
+                {
+                    exitHour = 9 + excessHours;
+                    excessHours = 0;
+                }
+            }
+        }
+    }
+    int[] daysMonth = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    while (exitDay > daysMonth[exitMonth])
+    {
+        exitDay -= daysMonth[exitMonth];
+        exitMonth += 1;
+
+    }
+    Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime[4]); // adaptar ao menu ou alterar o retorno para array
+
+}
+
 zoneTime(60, 2);
