@@ -3,7 +3,7 @@
 
            
             string[] MainMenuOptions = {"Administrador", "Cliente", "Opções", "voltar"};
-            string[] ClientMenuOptions = { "Estacionar", "Ver Zonas", "Histórico", "Voltar" };
+            string[] ClientMenuOptions = { "Estacionar", "Ver Zonas", "Histórico","Voltar" };
             string[] AdminMenuOptions = { "Ver Zonas", "Histórico", "Ver Máquinas", "Voltar" };
 
             string ClientMenu = Menu("Cliente", ClientMenuOptions);
