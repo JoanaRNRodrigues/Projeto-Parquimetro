@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+/*
 namespace Parquimetro
 {
     class Program
-    {
+    { 
+        
         static void Main(string[] args)
         {
+            Zone Zone1 = new Zone(1 ,1.15, 45, 35);
+            Zone Zone2 = new Zone(2, 1.15, 45, 35);
+            Zone Zone3 = new Zone(3, 1.15, 45, 35);
 
             int[] stockCoins = { 5, 2, 500, 500, 500, 500, 500, 500 };
             double[] coins = { 2.0, 1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01 };     //Tipos de moedas 
@@ -32,6 +36,8 @@ namespace Parquimetro
 
 
             //ESTRUTURA DE FUNCIONAMENTO DO PARQUIMTRO/MENUS:
+
+            //bool abeto ou fechado
 
             while (userChoice != MainMenuOptions.Length)
             {
@@ -75,3 +81,4 @@ namespace Parquimetro
 
     }
 }
+        */
