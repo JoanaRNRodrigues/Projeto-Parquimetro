@@ -13,25 +13,18 @@ namespace Parquimetro
             //Alterado para ter em consideração o stock
             //Dei um stock bastante elevado para diminuir o risco de ficar a zero
             //A função não corre mais do que uma vez
-            if (change > 0)                                       //se o valor a dar pela máquina for maior do que 0, vai se verificar que moeda devolver.
+            for (int i = 0; i < coins.Length; i++)                // i é o indice do array das coins
             {
-                for (int i = 0; i < coins.Length; i++)                // i é o indice do array das coins
+                while (change >= coins[i] & stock[i] > 0)
                 {
-                    while (change >= coins[i] & stock[i] > 0)
-                    {
-                        Console.WriteLine($"O Parquímetro devolve {coins[i]} euros");         //Imprime o valor de troco a dar ao utilizador
-                        change -= coins[i];                                                   //O valor a dar de troco é deduzido.
-                        change = Math.Round(change, 2);                                       //Arredonda o troco a duas casas decimais para evitar erro por arrendondamento
-                        stock[i]--;                                                           //O tipo de moeda dada é retirada do stock.
-                        //Console.WriteLine($" falta dar {change}");
-                    }
+                    Console.WriteLine($"O Parquímetro devolve {coins[i]} euros");         //Imprime o valor de troco a dar ao utilizador
+                    change -= coins[i];                                                   //O valor a dar de troco é deduzido.
+                    change = Math.Round(change, 2);                                       //Arredonda o troco a duas casas decimais para evitar erro por arrendondamento
+                    stock[i]--;                                                           //O tipo de moeda dada é retirada do stock.
+                                                                                          //Console.WriteLine($" falta dar {change}");
                 }
-
             }
-
         }
-
-        
 
         public static string Menu(string title, string[] options)                 //Função que devolve os menus
         {
