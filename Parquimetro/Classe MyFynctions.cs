@@ -81,20 +81,16 @@ namespace Parquimetro
             double parkingMinutes = minutesCount(change, zone, stock, coins);
             Time currentTime = new Time();
 
-            int currentHour = currentTime.Hour;
-            int currentMinute = currentTime.Minute;
-
-            int exitMinute = (int)Math.Round(parkingMinutes) + currentMinute;
-            int exitHour = currentHour;
-
-            int exitDay = currentTime.Day;
+            int exitMinute = (int)Math.Round(parkingMinutes) + currentTime.Minute;
+            int exitHour = currentTime.Hour;
             int weekDay = currentTime.DayOfWeek;
+            int exitDay = currentTime.Day;
             int exitMonth = currentTime.Month;
 
             if (exitMinute >= 60)
             {
                 int hours = exitMinute / 60;
-                exitHour = currentHour + hours;
+                exitHour = currentTime.Hour + hours;
                 exitMinute -= 60 * hours;
             }
 
