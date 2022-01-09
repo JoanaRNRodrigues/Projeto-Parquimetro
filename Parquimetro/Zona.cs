@@ -20,7 +20,7 @@ namespace Parquimetro
             this.id = id;
             this.CostPerHour = CostPerHour; //custo em euros por hora
             this.TimeLimit = TimeLimit; // tempo máximo em minutos
-            this.MaxChange = CostPerHour * (TimeLimit / 60);
+            this.MaxChange = CostPerHour * (TimeLimit / 60); //Custo máximo que o utilizador pode pagar por sessão
             this.Spaces = new Car[spaces]; // lugares disponíveis para estacionar
         }
     }
