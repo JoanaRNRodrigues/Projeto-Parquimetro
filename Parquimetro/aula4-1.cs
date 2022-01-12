@@ -13,22 +13,21 @@ namespace Parquimetro {
             // quando selecionar a zona atribuir valor 0, 1 ou 2 à variavel
             // caso a pessoa escolha a zona 1, a variavel zone será alterada para 0, caso escolha a zona 2 será zone = 1 e caso escolha zona 3, zone = 2
 
-            int[] stockCoins = { 5, 2, 500, 500, 500, 500, 500, 500 };
             double[] coins = { 2.0, 1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01 };
 
-            MyFunctions.zoneTime(50.0, new Zone(2, 120, 2, 40), stockCoins, coins );
+            MyFunctions.zoneTime(50.0, new Zone(2, 120, 2, 40), coins );
             Console.ReadLine();
         }
 
 
-        static double minutesCount(double change, Zone zone, int[] stock, double[] coins)
+        static double minutesCount(double change, Zone zone, double[] coins)
         {
             int[] currentTime = MyFunctions.Time();
             double minutesParking;
             if (change >= zone.MaxChange & zone.MaxChange > 0)
             {
                 minutesParking = zone.TimeLimit;
-                MyFunctions.giveChange(change - zone.MaxChange, coins, stock);
+                MyFunctions.giveChange(change - zone.MaxChange, coins);
                 return minutesParking;
             }
             else
@@ -38,9 +37,9 @@ namespace Parquimetro {
             }
         }
 
-        static void zoneTime(double change, Zone zone, int[] stock, double[] coins)
+        static void zoneTime(double change, Zone zone, double[] coins)
         {
-            double parkingMinutes = minutesCount(change, zone, stock, coins);
+            double parkingMinutes = minutesCount(change, zone, coins);
             int[] currentTime = MyFunctions.Time();
 
             int currentHour = currentTime[0];

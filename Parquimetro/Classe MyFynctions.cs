@@ -4,27 +4,33 @@ namespace Parquimetro
 {
     public static class MyFunctions
     {
-        public static void giveChange(double change, double[] coins, int[] stock)
+
+
+
+        public static void giveChange(double change, double[] coins)
         {
             //Esta função pede o valor de troco e imprime as moedas que iriam cair na máquina assim como o total de troco
 
             Console.WriteLine($"Troco: {change} euros");
 
-            //Alterado para ter em consideração o stock
-            //Dei um stock bastante elevado para diminuir o risco de ficar a zero
+            
+            
             //A função não corre mais do que uma vez
             for (int i = 0; i < coins.Length; i++)                // i é o indice do array das coins
             {
-                while (change >= coins[i] & stock[i] > 0)
-                {
-                    Console.WriteLine($"O Parquímetro devolve {coins[i]} euros");         //Imprime o valor de troco a dar ao utilizador
-                    change -= coins[i];                                                   //O valor a dar de troco é deduzido.
-                    change = Math.Round(change, 2);                                       //Arredonda o troco a duas casas decimais para evitar erro por arrendondamento
-                    stock[i]--;                                                           //O tipo de moeda dada é retirada do stock.
-                                                                                          //Console.WriteLine($" falta dar {change}");
+        
+                    while (change >= coins[i])
+                    {
+                        Console.WriteLine($"O Parquímetro devolve {coins[i]} euros");         //Imprime o valor de troco a dar ao utilizador
+                        change -= coins[i];                                                   //O valor a dar de troco é deduzido.
+                        change = Math.Round(change, 2);                                       //Arredonda o troco a duas casas decimais para evitar erro por arrendondamento
+                    }
+
                 }
             }
+
         }
+
 
         public static string Menu(string title, string[] options)                 //Função que devolve os menus
         {
@@ -59,14 +65,21 @@ namespace Parquimetro
             return MenuType;
         }
 
-        public static double minutesCount(double change, Zone zone, int[] stock, double[] coins)
+
+
+
+
+
+
+        public static double minutesCount(double change, Zone zone, double[] coins)
+
         {
             Time currentTime = new Time();
             double minutesParking;
             if (change >= zone.MaxChange & zone.MaxChange > 0)                      //Se a pessoa inserir mais troco do que o necessário para pagar o tempo máximo da zona 1 ou 2 a máquina dá troco
             {
                 minutesParking = zone.TimeLimit;
-                MyFunctions.giveChange(change - zone.MaxChange, coins, stock);
+                MyFunctions.giveChange(change - zone.MaxChange, coins);
                 return minutesParking;
             }
             else
@@ -76,10 +89,16 @@ namespace Parquimetro
             }
         }
 
-        public static int[] zoneTime(double change, Zone zone, int[] stock, double[] coins)
+
+
+
+
+
+        public static void zoneTime(double change, Zone zone, double[] coins)
         {
-            double parkingMinutes = minutesCount(change, zone, stock, coins);
-            Time currentTime = new Time();
+            double parkingMinutes = minutesCount(change, zone, coins);
+            int[] currentTime = MyFunctions.Time();
+
 
             int exitMinute = (int)Math.Round(parkingMinutes) + currentTime.Minute;
             int exitHour = currentTime.Hour;

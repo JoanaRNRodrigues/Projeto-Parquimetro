@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-/*
+
 namespace Parquimetro
 {
     class Program
@@ -15,7 +15,7 @@ namespace Parquimetro
             Zone Zone2 = new Zone(2, 1.15, 45, 35);
             Zone Zone3 = new Zone(3, 1.15, 45, 35);
 
-            int[] stockCoins = { 5, 2, 500, 500, 500, 500, 500, 500 };
+            
             double[] coins = { 2.0, 1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01 };     //Tipos de moedas 
 
             string[] MainMenuOptions = { "Administrador", "Cliente", "Sair" };
@@ -30,7 +30,7 @@ namespace Parquimetro
 
 
 
-            MyFunctions.giveChange(3.88, coins, stockCoins);
+            MyFunctions.giveChange(3.88, coins);
 
 
 
@@ -81,4 +81,4 @@ namespace Parquimetro
 
     }
 }
-        */
+        
