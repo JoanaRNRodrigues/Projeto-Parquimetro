@@ -209,6 +209,31 @@ namespace Parquimetro {
         }
 
 
+        public static bool isOpen()
+        {
+            Time currentTime = new Time();
+            if (currentTime.DayOfWeek == 7)
+            {
+                return false;
+            }
+            else if (currentTime.DayOfWeek == 6)
+            {
+                if (currentTime.Hour >= 9 && currentTime.Hour < 14)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (currentTime.Hour >= 9 && currentTime.Hour < 20)
+                {
+                    return true;
+                }
+            }
+            return false;    
+        }
+
+
     }
 }
 

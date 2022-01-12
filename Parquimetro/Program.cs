@@ -23,7 +23,7 @@ namespace Parquimetro
 
             string[] MainMenuOptions = { "Administrador", "Cliente", "Sair" };
             string[] ClientMenuOptions = { "Estacionar", "Ver Zonas", "Sair do Estacionamento","Voltar" };
-            string[] AdminMenuOptions = { "Ver Zonas", "Histórico", "Ver Máquinas", "Voltar" };
+            string[] AdminMenuOptions = { "Ver Zonas", "Ver Incumprimentos", "Ver Faturação", "Voltar" };
 
             string ClientMenu = MyFunctions.Menu("Cliente", ClientMenuOptions);
             string AdminMenu = MyFunctions.Menu("Administrador", AdminMenuOptions);
@@ -37,85 +37,105 @@ namespace Parquimetro
 
             //ESTRUTURA DE FUNCIONAMENTO DO PARQUIMTRO/MENUS:
 
-            //bool abeto ou fechado
-
-            while (userChoice != MainMenuOptions.Length)
+            if (zoneTime1.isOpen())
             {
-                Console.WriteLine(MainMenu);
-                userChoice = int.Parse(Console.ReadLine());
-
-                if (userChoice == 1)
+                while (userChoice != MainMenuOptions.Length)
                 {
-                    while (userChoice != AdminMenuOptions.Length)
-                    {
-                        Console.WriteLine(AdminMenu);
-                        userChoice = int.Parse(Console.ReadLine());
-                    }
-                    userChoice = 0;         //Damos esta opção para evitar que a opção de saida do Menu seja igual à opção de saida do Programa. 
-                }
-                else if (userChoice ==2)
-                {
-                    while (userChoice != ClientMenuOptions.Length)
-                    {
-                        Console.WriteLine(ClientMenu);
-                        userChoice = int.Parse(Console.ReadLine());
+                    Console.WriteLine(MainMenu);
+                    userChoice = int.Parse(Console.ReadLine());
 
-                        if (userChoice == 1)
+                    if (userChoice == 1)
+                    {
+                        while (userChoice != AdminMenuOptions.Length)
                         {
-                            Console.WriteLine("Insira numero da Zona a Estacionar");
-                            int parkChoice = int.Parse(Console.ReadLine());
-                            Zone zoneChoice = Zones[parkChoice - 1];
-                            if (zoneChoice.vacantSpaces == 0)
+                            Console.WriteLine(AdminMenu);
+                            userChoice = int.Parse(Console.ReadLine());
+                            if (userChoice == 1)
                             {
-                                Console.WriteLine("A zona está cheia. Tente outra zona ou vote mais tarde.");
+                                Console.WriteLine(Zone1);
+                                Console.WriteLine(Zone2);
+                                Console.WriteLine(Zone3);
                             }
-                            else
+                            if (userChoice == 2)
                             {
-                                Console.WriteLine(zoneChoice);
-                                Console.WriteLine("Insira o montante em euros:");
-                                double moneyInserted = Convert.ToDouble(Console.ReadLine());
-                                int minutesPurchased = (int)MyFunctions.minutesCount(moneyInserted, zoneChoice, coins);
-                                if (minutesPurchased > zoneChoice.TimeLimit && zoneChoice.TimeLimit > 0)
+
+                            }
+                            if (userChoice == 3)
+                            {
+
+                            }
+                        }
+                        userChoice = 0;         //Damos esta opção para evitar que a opção de saida do Menu seja igual à opção de saida do Programa. 
+                    }
+                    else if (userChoice == 2)
+                    {
+                        while (userChoice != ClientMenuOptions.Length)
+                        {
+                            Console.WriteLine(ClientMenu);
+                            userChoice = int.Parse(Console.ReadLine());
+
+                            if (userChoice == 1)
+                            {
+                                Console.WriteLine("Insira numero da Zona a Estacionar");
+                                int parkChoice = int.Parse(Console.ReadLine());
+                                Zone zoneChoice = Zones[parkChoice - 1];
+                                if (zoneChoice.vacantSpaces == 0)
                                 {
-                                    double change = minutesPurchased - zoneChoice.MaxChange;
-                                    Console.WriteLine($"A máquina devolve {change} euros");
-                                    minutesPurchased = zoneChoice.TimeLimit;
-                                    moneyInserted -= change;
-                                }
-                                Console.WriteLine($"Estacionamento válido durante {minutesPurchased} minutos");
-                                Console.WriteLine("Pressione 0 para confirmar a operação ou outro número para cancelar");
-                                int confirmation = int.Parse(Console.ReadLine());
-                                if (confirmation == 0)
-                                {
-                                    zoneChoice.park(minutesPurchased);
+                                    Console.WriteLine("A zona está cheia. Tente outra zona ou vote mais tarde.");
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"A máquina devolve {moneyInserted}");
+                                    Console.WriteLine(zoneChoice);
+                                    Console.WriteLine("Insira o montante em euros:");
+                                    double moneyInserted = Convert.ToDouble(Console.ReadLine());
+                                    int minutesPurchased = (int)MyFunctions.minutesCount(moneyInserted, zoneChoice, coins);
+                                    if (minutesPurchased > zoneChoice.TimeLimit && zoneChoice.TimeLimit > 0)
+                                    {
+                                        double change = minutesPurchased - zoneChoice.MaxChange;
+                                        Console.WriteLine($"A máquina devolve {change} euros");
+                                        minutesPurchased = zoneChoice.TimeLimit;
+                                        moneyInserted -= change;
+                                    }
+                                    Console.WriteLine($"Estacionamento válido durante {minutesPurchased} minutos");
+                                    Console.WriteLine("Pressione 0 para confirmar a operação ou outro número para cancelar");
+                                    int confirmation = int.Parse(Console.ReadLine());
+                                    if (confirmation == 0)
+                                    {
+                                        zoneChoice.park(minutesPurchased);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"A máquina devolve {moneyInserted}");
+                                    }
                                 }
                             }
-                        }
-                        else if (userChoice ==2)
-                        {
-                            Console.WriteLine(Zone1);
-                            Console.WriteLine(Zone2);
-                            Console.WriteLine(Zone3);
-                        }
-                        else if (userChoice ==3)
-                        {
-                            Console.WriteLine("Insira o número do seu Ticket:");
-                            int ticketId = int.Parse(Console.ReadLine());
-                            int zone = ticketId / 100;
-                            Zones[zone-1].unpark(ticketId);
-                            Console.WriteLine("Faça boa viagem!");
-                        }
+                            else if (userChoice == 2)
+                            {
+                                Console.WriteLine(Zone1);
+                                Console.WriteLine(Zone2);
+                                Console.WriteLine(Zone3);
+                            }
+                            else if (userChoice == 3)
+                            {
+                                Console.WriteLine("Insira o número do seu Ticket:");
+                                int ticketId = int.Parse(Console.ReadLine());
+                                int zone = ticketId / 100;
+                                Zones[zone - 1].unpark(ticketId);
+                                Console.WriteLine("Faça boa viagem!");
+                            }
 
 
+                        }
+                        userChoice = 0;
                     }
-                    userChoice = 0;
+                    //Continuar o resto dos submenus
                 }
-               //Continuar o resto dos submenus
             }
+            else
+            {
+                Console.WriteLine("Lamentamos mas estamos fechados.");
+            }
+            
 
 
           
