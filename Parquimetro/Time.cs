@@ -1,6 +1,8 @@
+using System;
+
 namespace Parquimetro
 {
-    internal class Time
+    public class Time
     {
         public int Hour;
         public int Minute;

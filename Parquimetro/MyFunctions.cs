@@ -29,7 +29,7 @@ namespace Parquimetro
                 }
             }
 
-        }
+        
 
 
         public static string Menu(string title, string[] options)                 //Função que devolve os menus
@@ -60,7 +60,7 @@ namespace Parquimetro
 
 
             MenuType += "|                                   |\n" +
-                        "|___________________________________|\n";
+                        "|___________________________________|";
 
             return MenuType;
         }
@@ -94,10 +94,10 @@ namespace Parquimetro
 
 
 
-        public static void zoneTime(double change, Zone zone, double[] coins)
+        public static int[] zoneTime(double change, Zone zone, double[] coins)
         {
             double parkingMinutes = minutesCount(change, zone, coins);
-            int[] currentTime = MyFunctions.Time();
+            Time currentTime = new Time();
 
 
             int exitMinute = (int)Math.Round(parkingMinutes) + currentTime.Minute;

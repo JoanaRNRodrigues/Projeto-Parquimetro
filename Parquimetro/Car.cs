@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Parquimetro
 {
-    internal class Car
+    public class Car
     {
         public int id;
         public Time time;
@@ -15,6 +15,13 @@ namespace Parquimetro
             this.id = id+1;
             this.time = new Time(exitTime);                             //um carro será um objeto com um id e um objeto tempo associado que será a hora e data do fim do estacionamento
         }                                                               // penso que assim será mais fácil para a parte do administrador
+
+
+        public Car(Time time, int id)
+        {
+            this.id = id;
+            this.time = time;
+        }
 
     }
 }
