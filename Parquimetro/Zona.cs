@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Parquimetro
 {
-    public  class Zone
+    public class Zone
     {
         public int id;
-        public int TimeLimit { get; set; }
-        public double CostPerHour { get; set; }
-        public double MaxChange { get; set; }
-        private Car[] Spaces { get; set; }
-    
+        public int TimeLimit;
+        public double CostPerHour;
+        public double MaxChange;
+        private Car[] Spaces;
+
 
         public Zone(int id, double CostPerHour, int TimeLimit, int spaces)
         {
