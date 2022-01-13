@@ -7,22 +7,22 @@ namespace Parquimetro
 
         public static double minutesCount(double change, Zone zone, double[] coins)
         {
+            // esta função recebe o dinheiro que o utilizador coloca na máquina, a zona em que será feito o estacionamento e um array com as diferentes moedas
+            // esta função retorna o número de minutos de estacionamento equivalentes ao valor que o utilizador inseriu, considerando o tempo máximo permitido por zona
             Time currentTime = new Time();
             double minutesParking;
-            if (change >= zone.MaxChange & zone.MaxChange > 0)
+            if (change >= zone.MaxChange & zone.MaxChange > 0)                      // caso a zona escolhida tenha limite de tempo e seja inserido demasiado dinheiro para esse tempo:
             {
-                minutesParking = zone.TimeLimit;
+                minutesParking = zone.TimeLimit;                                    // o valor máximo da zona será assumido e o restante dinheiro devolvido como troco
                 MyFunctions.giveChange(change - zone.MaxChange, coins);
                 return minutesParking;
             }
             else
             {
-                minutesParking = (60 * change) / zone.CostPerHour;  //tornar função universal com array que recebe preço e maxchange
+                minutesParking = (60 * change) / zone.CostPerHour;                  // caso contrário o dinheiro é convertido para o número de minutos equivalente
                 return minutesParking;
             }
         }
-
-
 
         public static Time calculateExitTime(int parkingMinutes, Zone zone)
         // calculateExitTime tem como parametros os minutos de estacionamento comprados pelo utiizador assim como a zona onde vai acontecer o estacionamento 
