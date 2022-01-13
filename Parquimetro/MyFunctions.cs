@@ -183,7 +183,25 @@ namespace Parquimetro
                 totalGains += (change - zone.MaxChange);
             }
         }
-        
 
+        public static void exceedTime(Zone[] zones) //se for administrador
+        {
+            Time now = new Time();
+            foreach (Zone zone in zones)
+            {
+                for (int i = 0; i < zone.Spaces.Length; i++)
+                {
+                    Car car = zone.Spaces[i];
+                    if (car != null)
+                    {
+                        if (car.parked == true && (car.time.Hour < now.Hour || (car.time.Hour == now.Hour && car.time.Minute < now.Minute)))
+                        {
+                            Console.WriteLine($"O carro no lugar {i} da zona {zone.id} está a exceder o estacionamento");
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }

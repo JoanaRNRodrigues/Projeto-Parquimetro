@@ -13,6 +13,7 @@ namespace Parquimetro
         public bool parked;
         public Car(int[] exitTime)
         {
+
             parked = true;
             this.time = new Time(exitTime);                             //um carro será um objeto com um id e um objeto tempo associado que será a hora e data do fim do estacionamento
         }                                                               // penso que assim será mais fácil para a parte do administrador

@@ -1,4 +1,5 @@
 using Parquimetro;
+using System;
 
 namespace Parquimetro
 {
@@ -25,7 +26,7 @@ namespace Parquimetro
             string AdminMenu = MyFunctions.Menu("Administrador", AdminMenuOptions);
             string MainMenu = MyFunctions.Menu("Bem Vindo", MainMenuOptions);
 
-            double[] coins = { 2.0, 1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01 };     //Tipos de moedas 
+            int userChoice = 1;
 
             if (zoneTime1.isOpen())
             {
@@ -48,11 +49,12 @@ namespace Parquimetro
                             }
                             if (userChoice == 2)
                             {
-
+                                MyFunctions.exceedTime(Zones);
+                                Console.WriteLine("Terminada a inspeção por carros em incumprimento");
                             }
                             if (userChoice == 3)
                             {
-
+                                Console.WriteLine($"Foram recebidos {MyFunctions.totalGains} euros");
                             }
                         }
                         userChoice = 0;         //Damos esta opção para evitar que a opção de saida do Menu seja igual à opção de saida do Programa. 
@@ -77,7 +79,7 @@ namespace Parquimetro
                                 {
                                     Console.WriteLine(zoneChoice);
                                     Console.WriteLine("Insira o montante em euros:");
-                                    double moneyInserted = Convert.ToDouble(Console.ReadLine());
+                                    double moneyInserted = double.Parse(Console.ReadLine());
                                     int minutesPurchased = (int)MyFunctions.minutesCount(moneyInserted, zoneChoice, coins);
                                     if (minutesPurchased > zoneChoice.TimeLimit && zoneChoice.TimeLimit > 0)
                                     {
@@ -91,6 +93,7 @@ namespace Parquimetro
                                     int confirmation = int.Parse(Console.ReadLine());
                                     if (confirmation == 0)
                                     {
+                                        MyFunctions.dayGains(false, moneyInserted, zoneChoice);
                                         zoneChoice.park(minutesPurchased);
                                     }
                                     else
@@ -116,7 +119,6 @@ namespace Parquimetro
                         }
                         userChoice = 0;
                     }
-                    //Continuar o resto dos submenus
                 }
             }
             else

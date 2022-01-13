@@ -33,17 +33,6 @@ namespace Parquimetro
             this.DayOfWeek = ((int)tempoPC.DayOfWeek);
             this.Year = tempoPC.Year;
         }
-        public void exceedTime(Zone zone) //se for administrador
-        {
-            foreach(Car car in zone.Spaces)
-            {
-                Time now = new Time();
-                if (car.parked == true && (car.time.Hour > now.Hour || (car.time.Hour == now.Hour && car.time.Minute > now.Minute)))
-                {
-                    Console.WriteLine("O carro " + car.id + " está a exceder o estacionamento");
-                }
-            }
-
-        }
+        
     }
 }

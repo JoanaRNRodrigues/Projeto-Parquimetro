@@ -12,7 +12,7 @@ namespace Parquimetro
         public int TimeLimit;
         public double CostPerHour;
         public double MaxChange;
-        private Car[] Spaces;
+        public Car[] Spaces;
         public int vacantSpaces;
 
 
