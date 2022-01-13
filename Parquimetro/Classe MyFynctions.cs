@@ -8,9 +8,9 @@ namespace Parquimetro
 {
     public static class MyFunctions
     {
-        public static int id;
-        public static bool needChange;
-        public static double totalGains;
+        public static int id;                                                       // id que identifica os objetos carro
+        public static bool needChange;                                              // variável que descreve se um transação envolveu troco para fins de faturação
+        public static double totalGains;                                            // Variável que vai sendo incrementada consuante os valores que são ganhos num dado dia
         public static void giveChange(double change, double[] coins)
         {
             //Esta função pede o valor de troco e imprime as moedas que iriam cair na máquina assim como o total de troco
@@ -21,18 +21,19 @@ namespace Parquimetro
             //Dei um stock bastante elevado para diminuir o risco de ficar a zero
             //A função não corre mais do que uma vez
             for (int i = 0; i < coins.Length; i++)                // i é o indice do array das coins
-            { 
+            {
                 while (change >= coins[i])
                 {
                     Console.WriteLine($"O Parquímetro devolve {coins[i]} euros");         //Imprime o valor de troco a dar ao utilizador
                     change -= coins[i];                                                   //O valor a dar de troco é deduzido.
                     change = Math.Round(change, 2);                                       //Arredonda o troco a duas casas decimais para evitar erro por arrendondamento
-                        
+
                 }
             }
 
         }
-        public static string Menu(string title, string[] options)                 //Função que devolve os menus
+
+        public static string Menu(string title, string[] options)                   //Função que devolve os menus
         {
             string MenuType = "";
             MenuType += " ___________________________________\n" +           // \n é para escrever na linha abaixo/nova linha
@@ -60,129 +61,65 @@ namespace Parquimetro
 
 
             MenuType += "|                                   |\n" +
-                        "|___________________________________|\n";
+                        "|___________________________________|";
 
             return MenuType;
         }
 
         public static double minutesCount(double change, Zone zone, double[] coins)
         {
+            // esta função recebe o dinheiro que o utilizador coloca na máquina, a zona em que será feito o estacionamento e um array com as diferentes moedas
+            // esta função retorna o número de minutos de estacionamento equivalentes ao valor que o utilizador inseriu, considerando o tempo máximo permitido por zona
             Time currentTime = new Time();
             double minutesParking;
-            if (change >= zone.MaxChange & zone.MaxChange > 0)
+            if (change >= zone.MaxChange & zone.MaxChange > 0)                      // caso a zona escolhida tenha limite de tempo e seja inserido demasiado dinheiro para esse tempo:
             {
-                minutesParking = zone.TimeLimit;
+                minutesParking = zone.TimeLimit;                                    // o valor máximo da zona será assumido e o restante dinheiro devolvido como troco
                 MyFunctions.giveChange(change - zone.MaxChange, coins);
                 needChange = true;
                 return minutesParking;
             }
             else
             {
-                minutesParking = (60 * change) / zone.CostPerHour;  //tornar função universal com array que recebe preço e maxchange
+                minutesParking = (60 * change) / zone.CostPerHour;                  // caso contrário o dinheiro é convertido para o número de minutos equivalente
                 return minutesParking;
             }
         }
 
-        public static int[] zoneTime(double change, Zone zone, double[] coins)
+        public static void dayGains(bool needChange, double change, Zone zone)
         {
-            double parkingMinutes = minutesCount(change, zone, coins);
-            Time currentTime = new Time();
-            int exitMinute = (int)Math.Round(parkingMinutes) + currentTime.Minute;
-            int exitHour = currentTime.Hour;
-            int weekDay = currentTime.DayOfWeek;
-            int exitDay = currentTime.Day;
-            int exitMonth = currentTime.Month;
-            if (exitMinute >= 60)
-            {
-                int hours = exitMinute / 60;
-                exitHour = currentTime.Hour + hours;
-                exitMinute -= 60 * hours;
-            }
-
-
-            if (exitHour >= 20 & currentTime.DayOfWeek <= 5 || exitHour >= 14 & currentTime.DayOfWeek == 6)
-            {
-                if (zone.id < 2)
-                {
-                    Console.WriteLine("20h00 " + exitDay + "/" + exitMonth + "/" + currentTime.Year); // adaptar ao menu ou alterar o retorno para array
-                }
-                else
-                {
-                    int excessHours = exitHour - 20;
-                    if (excessHours == 0)
-                    {
-                        exitHour = 9;
-                    }
-                    exitDay++;
-                    weekDay++;
-
-                    while (excessHours > 0)
-                    {
-                        while (weekDay <= 5)
-                        {
-                            if (excessHours >= 11)
-                            {
-                                excessHours -= 11;
-                                weekDay++;
-                                exitDay++;
-                            }
-                            else
-                            {
-                                exitHour = 9 + excessHours;
-                                excessHours = 0;
-                                break;
-                            }
-
-                        }
-                        if (weekDay == 6 & excessHours > 0)
-                        {
-                            if (excessHours >= 5)
-                            {
-                                excessHours -= 5;
-                                exitDay += 2;
-                                weekDay = 1;
-                            }
-                            else
-                            {
-                                exitHour = 9 + excessHours;
-                                excessHours = 0;
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime.Year);
-            }
-            if (zone.id == 2)
-            {
-                int[] daysMonth = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-                while (exitDay > daysMonth[exitMonth])
-                {
-                    exitDay -= daysMonth[exitMonth];
-                    exitMonth += 1;
-
-                }
-                Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime.Year); // adaptar ao menu ou alterar o retorno para array
-            }
-            int[] exitTime = { currentTime.Year, exitMonth, exitDay, exitHour, exitMinute, 0 };
-
-            return exitTime;
-        }
-
-        public static void dayGains(bool needChange,double change, Zone zone)
-        {
+            // esta funcção recebe um booleano que indica se numa transação foi necessário troco, o dinheiro inserido nessa transação e a zona de estacionamento
+            // ela incrementa na variável totalGains o dinheiro ganho na transação, para que seja possível consultar a faturação diária
             if (needChange == false)
             {
-                totalGains += change;
+                totalGains += change;                                               // caso a transação não envolva troco, o dinheiro inserido é adicionado à faturação no seu total
             }
             else
             {
-                totalGains += (change - zone.MaxChange);
-            }
+                totalGains += zone.MaxChange;                                       // caso contrário, o que só acontece nas zonas com tempo limite, 
+            }                                                                       // é adicionado o valor máximo associado à zona pois foi comprado o tempo máximo
         }
-        
 
+        public static void exceedTime(Zone[] zones) 
+        {
+            // esta função recebe o parametro zones que é um array das 3 zonas disponiveis
+            // determina se existe algum carro a exceder o tempo de estacionamento e notifica o administrador quando seleciona essa opção no menu
+            Time now = new Time();
+            foreach (Zone zone in zones)                                            // para cada zona percorre os espaços de estacionamento e verifica se
+            {                                                                       // algum carro tem um limite de estacionamento que já tenha passado em relação a hora atual
+                for (int i = 0; i < zone.Spaces.Length; i++)
+                {
+                    Car car = zone.Spaces[i];
+                    if (car != null)
+                    {
+                        if (car.parked == true && (car.time.Hour < now.Hour && car.time.Day==now.Day|| (car.time.Hour == now.Hour && car.time.Minute < now.Minute && car.time.Day == now.Day)))
+                        {
+                            Console.WriteLine($"O carro no lugar {i} da zona {zone.id} está a exceder o estacionamento");
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }
