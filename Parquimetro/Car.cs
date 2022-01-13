@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +10,25 @@ namespace Parquimetro
     {
         public int id;
         public Time time;
+        public bool parked;
         public Car(int[] exitTime)
         {
-            this.id = id+1;
+            parked = true;
             this.time = new Time(exitTime);                             //um carro será um objeto com um id e um objeto tempo associado que será a hora e data do fim do estacionamento
         }                                                               // penso que assim será mais fácil para a parte do administrador
 
 
         public Car(Time time, int id)
         {
-            this.id = id;
+            parked = true;
             this.time = time;
         }
-
+           
+        // penso que assim será mais fácil para a parte do administrador
+        public void exitParking()
+        {
+            this.parked = false;
+        }
+     
     }
 }

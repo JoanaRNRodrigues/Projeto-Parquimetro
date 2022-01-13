@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Parquimetro;
 
 namespace Parquimetro
 {
@@ -29,13 +25,7 @@ namespace Parquimetro
             string AdminMenu = MyFunctions.Menu("Administrador", AdminMenuOptions);
             string MainMenu = MyFunctions.Menu("Bem Vindo", MainMenuOptions);
 
-            int userChoice = 1;    //Dei este valor para o  userChoice não ficar vazio
-
-
-
-           
-
-            //ESTRUTURA DE FUNCIONAMENTO DO PARQUIMTRO/MENUS:
+            double[] coins = { 2.0, 1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01 };     //Tipos de moedas 
 
             if (zoneTime1.isOpen())
             {
@@ -123,8 +113,6 @@ namespace Parquimetro
                                 Zones[zone - 1].unpark(ticketId);
                                 Console.WriteLine("Faça boa viagem!");
                             }
-
-
                         }
                         userChoice = 0;
                     }
@@ -136,21 +124,13 @@ namespace Parquimetro
                 Console.WriteLine("Lamentamos mas estamos fechados.");
             }
             
-
-
-          
-
-            
         }
-
-          
-
-
-
-        
-
-
-
     }
+    //Continuar o resto dos submenus
+
 }
-        
+
+    
+
+ 
+             
