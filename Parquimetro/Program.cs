@@ -11,6 +11,7 @@ namespace Parquimetro
             Random rnd = new Random();
             
             //Instanciamento das Zonas
+            //os lugares de cada zona têm de ser atribuidos aleatoriamente atraves de um metodo.
             Zone Zone1 = new Zone(1, 1.15, 45, rnd.Next(10, 30));
             Zone Zone2 = new Zone(2, 1.0, 120, rnd.Next(10, 40));
             Zone Zone3 = new Zone(3, 0.62, 0, rnd.Next(10, 50));
@@ -128,6 +129,7 @@ namespace Parquimetro
             else     //Se estiver for do horário de funcionamento ou durante o domingo, imprime a mensagem
             {
                 Console.WriteLine("Lamentamos mas estamos fechados.");
+                Console.ReadLine();
             }
 
         }
