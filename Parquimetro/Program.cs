@@ -4,23 +4,24 @@ using System;
 namespace Parquimetro
 {
     class Program
-    { 
-        
+    {
+
         static void Main(string[] args)
         {
             Random rnd = new Random();
+            
             //Instanciamento das Zonas
-            Zone Zone1 = new Zone(1 ,1.15, 45, rnd.Next(10, 30));
+            Zone Zone1 = new Zone(1, 1.15, 45, rnd.Next(10, 30));
             Zone Zone2 = new Zone(2, 1.0, 120, rnd.Next(10, 40));
             Zone Zone3 = new Zone(3, 0.62, 0, rnd.Next(10, 50));
 
             Zone[] Zones = { Zone1, Zone2, Zone3 };
-            
-            double[] coins = { 2.0, 1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01 };     //Tipos de moedas 
 
+            double[] coins = { 2.0, 1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01 };     //Tipos de moedas 
+            
             //Opções de cada Menu
             string[] MainMenuOptions = { "Administrador", "Cliente", "Sair" };
-            string[] ClientMenuOptions = { "Estacionar", "Ver Zonas", "Sair do Estacionamento","Voltar" };
+            string[] ClientMenuOptions = { "Estacionar", "Ver Zonas", "Sair do Estacionamento", "Voltar" };
             string[] AdminMenuOptions = { "Ver Zonas", "Ver Incumprimentos", "Ver Faturação", "Voltar" };
 
             //Criação dos Menus
@@ -30,12 +31,12 @@ namespace Parquimetro
 
             int userChoice = 1;
 
-            if (zoneTime1.isOpen())         //Só acedemos aos Menus durante o horário de funcionamento
+            if (zoneTime1.isOpen())                     // Só acedemos aos Menus durante o horário de funcionamento
             {
-                while (userChoice != MainMenuOptions.Length)        //Enquanto o utilizador não escolher sair ou voltar, permite a escolhe dos Menus
+                while (userChoice != MainMenuOptions.Length)
                 {
-                    Console.WriteLine(MainMenu);                        //Mostra o Menu Principal
-                    userChoice = int.Parse(Console.ReadLine());         //Permite a escolha entre Menu Cliente, Menu Administrador ou permancer no Menu Principal
+                    Console.WriteLine(MainMenu);
+                    userChoice = int.Parse(Console.ReadLine());
 
                     if (userChoice == 1)            //Aceder ao Menu Administrador
                     {
@@ -45,7 +46,7 @@ namespace Parquimetro
                             userChoice = int.Parse(Console.ReadLine());     //Permite a escolha entre as diferentes opções do Menu Administrador
                             if (userChoice == 1)                //Selecionar Ver as Zonas
                             {   //Mostra os dados das zonas     
-                                Console.WriteLine(Zone1);       
+                                Console.WriteLine(Zone1);
                                 Console.WriteLine(Zone2);
                                 Console.WriteLine(Zone3);
                             }
@@ -56,7 +57,7 @@ namespace Parquimetro
                             }
                             if (userChoice == 3)        //Seleccionar Ver Faturação
                             {
-                                Console.WriteLine($"Foram recebidos {MyFunctions.totalGains} euros");       //Mostra os dados da faturação
+                                Console.WriteLine($"Foram recebidos {MyFunctions.TotalGains} euros");       //Mostra os dados da faturação
                             }
                         }
                         userChoice = 0;         //Foi dada esta atribuição para evitar que a opção de saida do Menu fosse igual à opção de saida do Programa. 
@@ -70,10 +71,10 @@ namespace Parquimetro
 
                             if (userChoice == 1)        //Seleccionar Estacionar
                             {
-                                Console.WriteLine("Insira numero da Zona a Estacionar");        
+                                Console.WriteLine("Insira numero da Zona a Estacionar");
                                 int parkChoice = int.Parse(Console.ReadLine());     //Permite a seleção das zonas
                                 Zone zoneChoice = Zones[parkChoice - 1];
-                                if (zoneChoice.vacantSpaces == 0)           //Se não houver lugares disponiveis imprime a mensagem
+                                if (zoneChoice.VacantSpaces == 0)           //Se não houver lugares disponiveis imprime a mensagem
                                 {
                                     Console.WriteLine("A zona está cheia. Tente outra zona ou vote mais tarde.");
                                 }
@@ -83,30 +84,31 @@ namespace Parquimetro
                                     Console.WriteLine("Insira o montante em euros:");
                                     double moneyInserted = MyFunctions.receivePayment(coins);       //Permite pagamento do custo
                                     int minutesPurchased = (int)MyFunctions.minutesCount(moneyInserted, zoneChoice, coins);
-                                    if (minutesPurchased > zoneChoice.TimeLimit && zoneChoice.TimeLimit > 0)
-                                    {   //Calcula o custo de acordo com o valor inserido e o tempo maximo de estacionamento permitido em cada zona
-                                        double change = moneyInserted - zoneChoice.MaxChange;           
-                                        MyFunctions.giveChange(change, coins);      //Calcula o troco a receber
-                                        minutesPurchased = zoneChoice.TimeLimit;
-                                        moneyInserted -= change;
-                                    }
+
                                     Console.WriteLine($"Estacionamento válido durante {minutesPurchased} minutos");
                                     Console.WriteLine("Pressione 0 para confirmar a operação ou outro número para cancelar");
                                     int confirmation = int.Parse(Console.ReadLine());
                                     if (confirmation == 0)
-                                    {   //Se o utilizador confirmar a operação, adiciona o valor inserido e estaciona o carro.
-                                        MyFunctions.dayGains(false, moneyInserted, zoneChoice);
+                                    {//Se o utilizador confirmar a operação, adiciona o valor inserido e estaciona o carro.
+                                        if (minutesPurchased > zoneChoice.TimeLimit && zoneChoice.TimeLimit > 0)
+                                        {//Calcula o custo de acordo com o valor inserido e o tempo maximo de estacionamento permitido em cada zona
+                                            double change = moneyInserted - zoneChoice.MaxChange;
+                                            MyFunctions.giveChange(change, coins);      //Calcula o troco a receber
+                                            minutesPurchased = zoneChoice.TimeLimit;
+                                            moneyInserted -= change;
+                                        }
+                                        MyFunctions.dayGains(moneyInserted, zoneChoice);
                                         zoneChoice.park(minutesPurchased);
                                     }
                                     else
-                                    {   //Se o utilizador recusar a operção devolve o valor inserido
+                                    {//Se o utilizador recusar a operção devolve o valor inserido
                                         Console.WriteLine($"A máquina devolve {moneyInserted}");
                                     }
                                 }
                             }
-                            else if (userChoice == 2)       //Selecionar Ver zonas
-                            {   //Mostra os dados das zonas
-                                Console.WriteLine(Zone1);       
+                            else if (userChoice == 2)
+                            {
+                                Console.WriteLine(Zone1);
                                 Console.WriteLine(Zone2);
                                 Console.WriteLine(Zone3);
                             }
@@ -123,17 +125,16 @@ namespace Parquimetro
                     }
                 }
             }
-            else    //Se estiver for do horário de funcionamento ou durante o domingo, imprime a mensagem
+            else     //Se estiver for do horário de funcionamento ou durante o domingo, imprime a mensagem
             {
                 Console.WriteLine("Lamentamos mas estamos fechados.");
             }
-            Console.ReadLine();
+
         }
     }
     
 
 }
-
     
 
  
