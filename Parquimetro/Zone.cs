@@ -31,10 +31,13 @@ namespace Parquimetro
 
         public override string ToString()
         {
+            string Limite;
+            if (this.TimeLimit == 0) { Limite = "Sem Limite de tempo"; }
+            else { Limite = this.TimeLimit.ToString() + "minutos"; }
             return $"-------------------\n" +
                 $"ZONA {id}: \n" +
                 $"Custo Por Hora: {CostPerHour} euros \n" +
-                $"Limite de Tempo: {TimeLimit} minutos \n" +
+                $"Limite de Tempo: {Limite} \n" +
                 $"Lotação: {Spaces.Length} \n" +
                 $"Lugares Vagos: {vacantSpaces}";
         }
@@ -62,28 +65,26 @@ namespace Parquimetro
 
 
 
-        public void park(int minutes)
+        public void park(int minutes)       //Função para estacionar
         {
-            int freeSpot = findFreeSpot();
-            Time exitTime = zoneTime1.calculateExitTime(minutes, this);
-            int ticketId = id * 100 + freeSpot;
-            Car parkingCar = new Car(exitTime, ticketId);
-            vacantSpaces--;
-            printTicket(exitTime, freeSpot, ticketId);
-            Spaces[freeSpot] = parkingCar;
+            int freeSpot = findFreeSpot();      //Encontra-se um lugar livre
+            Time exitTime = zoneTime1.calculateExitTime(minutes, this);     //Determinamos a hora de saida
+            int ticketId = id * 100 + freeSpot;     //Calculo do ID to ticket
+            Car parkingCar = new Car(exitTime, ticketId);   //Instanciamento do Carro
+            vacantSpaces--;     //O numero de lugares disponiveis diminui
+            printTicket(exitTime, freeSpot, ticketId);      //Impressão do ticket
+            Spaces[freeSpot] = parkingCar;      //Carro é estacionado
+        }
+
+        public void unpark(int ticketId)    //Função que tira o carro do estacionamento
+        {
+            int freeSpot = ticketId % 100;      //Lugar é determinado pelos ultimos dois digitos do ID do ticket
+            Spaces[freeSpot] = null;    //O espaço deixa de ter um carro
+            vacantSpaces++;     //O numero de lugar livres aumenta
         }
 
 
-
-        public void unpark(int ticketId)
-        {
-            int freeSpot = ticketId % 100;
-            Spaces[freeSpot] = null;
-            vacantSpaces++;
-        }
-
-
-        private void printTicket(Time exitTime, int vacantSpot, int ticketId)
+        private void printTicket(Time exitTime, int vacantSpot, int ticketId)       //Função que imprime o ticket
         {
             Console.WriteLine($"----------------\n" +
                 $"Zona: {id}\n" +

@@ -13,14 +13,11 @@ namespace Parquimetro
         public static double totalGains;
         public static void giveChange(double change, double[] coins)
         {
-            //Esta função pede o valor de troco e imprime as moedas que iriam cair na máquina assim como o total de troco
+            //Esta função pede o valor do troco e imprime as moedas que iriam cair na máquina assim como o total de troco
 
             Console.WriteLine($"Troco: {change} euros");
-
-            //Alterado para ter em consideração o stock
-            //Dei um stock bastante elevado para diminuir o risco de ficar a zero
-            //A função não corre mais do que uma vez
-            for (int i = 0; i < coins.Length; i++)                // i é o indice do array das coins
+                        
+            for (int i = 0; i < coins.Length; i++)                //O i é o indice do array das coins
             { 
                 while (change >= coins[i])
                 {
@@ -33,26 +30,26 @@ namespace Parquimetro
 
         }
         
-        public static string Menu(string title, string[] options)                 //Função que devolve os menus
+        public static string Menu(string title, string[] options)                 //Função que constroi o aspeto dos Menus
         {
             string MenuType = "";
-            MenuType += " ___________________________________\n" +           // \n é para escrever na linha abaixo/nova linha
+            MenuType += " ___________________________________\n" +           
                         "|                                   |\n" +
-                        $"|------    {title}";                              // O sinal $ serve para adicionar rapidamente um variavel a string
-
-            for (int k = 0; k <= 18 - title.Length; k++)                      // Adiciona espaços para alinhar a barra da direita       //Inicio o K em 0 porque escolhi como parametro assumir que o numero de caracteres do titulo começasse em 0.
+                        $"|------    {title}";                             
+            //Função que controla o espaçamento no aspeto dos Menus para o sector do Titulo
+            for (int k = 0; k <= 18 - title.Length; k++)                      //Iniciou-se o K em 0 pois assumiu-se que o numero de caracteres do titulo começasse em 0.
             {
                 MenuType += " ";
 
             }
             MenuType += "------|\n";
 
-
-            for (int i = 0; i < options.Length; i++)                    // i é o indice das opções
+            //Função que controla o espaçamento no aspeto dos Menus para o sector das Opções
+            for (int i = 0; i < options.Length; i++)                    //O i é o indice das opções
             {
-                MenuType += $"|          {i + 1}.{options[i]}";           // Imprime o número da opção e o "valor" da opçõo   
+                MenuType += $"|          {i + 1}.{options[i]}";           // Imprime o número da opção e respetivo "valor"   
 
-                for (int j = 0; j <= 22 - options[i].Length; j++)         // Adiciona espaços para alinhar a barra da direita       //Inicio o J em 0 porque escolhi como parametro assumir que o numero de caracteres das opções começasse em 0.
+                for (int j = 0; j <= 22 - options[i].Length; j++)          //Iniciou-se o J em 0 pois assumiu-se que o numero de caracteres das opções começasse em 0.
                 {
                     MenuType += " ";
                 }
@@ -79,7 +76,7 @@ namespace Parquimetro
             }
             else
             {
-                minutesParking = (60 * change) / zone.CostPerHour;  //tornar função universal com array que recebe preço e maxchange
+                minutesParking = (60 * change) / zone.CostPerHour;  
                 return minutesParking;
             }
         }
@@ -105,7 +102,7 @@ namespace Parquimetro
             {
                 if (zone.id < 2)
                 {
-                    Console.WriteLine("20h00 " + exitDay + "/" + exitMonth + "/" + currentTime.Year); // adaptar ao menu ou alterar o retorno para array
+                    Console.WriteLine("20h00 " + exitDay + "/" + exitMonth + "/" + currentTime.Year); 
                 }
                 else
                 {
@@ -165,7 +162,7 @@ namespace Parquimetro
                     exitMonth += 1;
 
                 }
-                Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime.Year); // adaptar ao menu ou alterar o retorno para array
+                Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime.Year); 
             }
             int[] exitTime = { currentTime.Year, exitMonth, exitDay, exitHour, exitMinute, 0 };
 
@@ -203,5 +200,30 @@ namespace Parquimetro
             }
 
         }
+
+
+        public static double receivePayment (double[] coins)   //Função para selecionar as moedas
+        {
+            double insertedMoney = 0;
+            string[] coinsOptions = { "2 euros", "1 euro", "50 centimos", "20 centimos", "10 centimos", "5 centimos", "2 centimos", "1 centimo", "confirmar"};
+            string Payment = Menu("Pagamento", coinsOptions);
+            Console.WriteLine(Payment);
+            int moneySelected = int.Parse(Console.ReadLine());
+            while (moneySelected != coinsOptions.Length)
+            {
+                insertedMoney = insertedMoney + coins[moneySelected - 1];
+                Console.WriteLine($"Montante atual: {insertedMoney}");
+                moneySelected = int.Parse(Console.ReadLine());
+                
+            }
+
+            return insertedMoney;
+        }
+
+
+
+
+
     }
+
 }
