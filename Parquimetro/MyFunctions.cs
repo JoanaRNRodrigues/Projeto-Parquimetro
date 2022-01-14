@@ -124,6 +124,14 @@ namespace Parquimetro
             }
 
         }
+        public static void changePrice(float newPrice, Zone zone)
+        {   // esta função altera o preço de uma dada zona
+            zone.CostPerHour=newPrice;
+        }
+        public static void changeTimeLimit(int newLimit, Zone zone)
+        {   //esta função altera o tempo limite de uma zona, exceto a terceira
+            zone.TimeLimit = newLimit;
+        }
         public static double receivePayment(double[] coins)   //Função para selecionar as moedas
         {
             double insertedMoney = 0;
