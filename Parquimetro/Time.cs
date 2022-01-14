@@ -34,5 +34,10 @@ namespace Parquimetro
             this.Year = tempoPC.Year;
         }
         
+        public override string ToString()
+        {
+            return $"{Day}/{Month}/{Year} {Hour}:{Minute}:00";
+        }
+
     }
 }
