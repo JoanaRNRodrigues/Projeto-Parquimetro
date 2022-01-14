@@ -15,6 +15,7 @@ namespace Parquimetro
             Zone Zone1 = new Zone(1, 1.15, 45, rnd.Next(10, 30));
             Zone Zone2 = new Zone(2, 1.0, 120, rnd.Next(10, 40));
             Zone Zone3 = new Zone(3, 0.62, 0, rnd.Next(10, 50));
+            Console.WriteLine(Zone1.MaxChange);
 
             Zone[] Zones = { Zone1, Zone2, Zone3 };
 
@@ -79,7 +80,7 @@ namespace Parquimetro
                                     zoneChoice.TimeLimit = int.Parse(Console.ReadLine());
                                     Console.WriteLine($"O tempo limite da zona {zone} é agora {zoneChoice.TimeLimit} minutos.");
                                 }
-
+                                zoneChoice.updateMaxChange(); //Atualiza também o maxChange da zone
                             }
                         }
                         userChoice = 0;         //Foi dada esta atribuição para evitar que a opção de saida do Menu fosse igual à opção de saida do Programa. 

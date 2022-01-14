@@ -81,10 +81,10 @@ namespace Parquimetro
             // esta função retorna o número de minutos de estacionamento equivalentes ao valor que o utilizador inseriu, considerando o tempo máximo permitido por zona
             Time currentTime = new Time();
             double minutesParking;
-            if (change >= zone.MaxChange & zone.MaxChange > 0)                      // caso a zona escolhida tenha limite de tempo e seja inserido demasiado dinheiro para esse tempo:
+            if (change >= zone.MaxChange && zone.MaxChange > 0)                      // caso a zona escolhida tenha limite de tempo e seja inserido demasiado dinheiro para esse tempo:
             {
                 minutesParking = zone.TimeLimit;                                    // o valor máximo da zona será assumido e o restante dinheiro devolvido como troco
-                MyFunctions.giveChange(change - zone.MaxChange, coins);
+                MyFunctions.giveChange(Math.Round(change - zone.MaxChange,2), coins);
                 
                 return minutesParking;
             }

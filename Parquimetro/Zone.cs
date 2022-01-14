@@ -51,12 +51,15 @@ namespace Parquimetro
             this.id = id;
             this.costPerHour = CostPerHour; //custo em euros por hora
             this.timeLimit = TimeLimit; // tempo máximo em minutos
-            this.maxChange = CostPerHour * (TimeLimit / 60); //Custo máximo que o utilizador pode pagar por sessão
+            this.maxChange = CostPerHour * ((double)TimeLimit / 60); //Custo máximo que o utilizador pode pagar por sessão
             this.spaces = new Car[Spaces]; // lugares disponíveis para estacionar
             this.vacantSpaces = Spaces;
         }
 
-
+        public void updateMaxChange() //atualiza o maxChange quando o administrador altera o valor de tempo máximo ou custo por hora das zonas
+        {
+            this.maxChange = CostPerHour * ((double)TimeLimit / 60);
+        }
 
 
         public override string ToString()
