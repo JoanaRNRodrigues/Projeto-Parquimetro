@@ -63,7 +63,7 @@ namespace Parquimetro
         {
             string Limite;
             if (this.TimeLimit == 0) { Limite = "Sem Limite de tempo"; }
-            else { Limite = this.TimeLimit.ToString() + "minutos"; }
+            else { Limite = this.TimeLimit.ToString() + " minutos"; }
             return $"-------------------\n" +
                 $"ZONA {id}: \n" +
                 $"Custo Por Hora: {CostPerHour} euros \n" +

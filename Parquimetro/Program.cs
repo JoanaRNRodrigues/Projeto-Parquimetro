@@ -23,7 +23,7 @@ namespace Parquimetro
             //Opções de cada Menu
             string[] MainMenuOptions = { "Administrador", "Cliente", "Sair" };
             string[] ClientMenuOptions = { "Estacionar", "Ver Zonas", "Sair do Estacionamento", "Voltar" };
-            string[] AdminMenuOptions = { "Ver Zonas", "Ver Incumprimentos", "Ver Faturação", "Voltar" };
+            string[] AdminMenuOptions = { "Ver Zonas", "Ver Incumprimentos", "Ver Faturação", "Alterar Zonas","Voltar" };
 
             //Criação dos Menus
             string ClientMenu = MyFunctions.Menu("Cliente", ClientMenuOptions);
@@ -59,6 +59,27 @@ namespace Parquimetro
                             if (userChoice == 3)        //Seleccionar Ver Faturação
                             {
                                 Console.WriteLine($"Foram recebidos {MyFunctions.TotalGains} euros");       //Mostra os dados da faturação
+                            }
+                            if (userChoice == 4)
+                            {
+                                Console.WriteLine("Insira o numero da zona a alterar: ");
+                                int zone = int.Parse(Console.ReadLine());
+                                Zone zoneChoice = Zones[zone - 1];
+                                Console.WriteLine("Prima 0 para alterar o custo por hora e qualquer outro número para alterar o tempo máximo: ");
+                                userChoice = int.Parse(Console.ReadLine());
+                                if (userChoice == 0)
+                                {
+                                    Console.WriteLine($"O custo por hora atual da zona {zone} é: {zoneChoice.CostPerHour} euros. Insira o novo valor: ");
+                                    zoneChoice.CostPerHour = double.Parse(Console.ReadLine());
+                                    Console.WriteLine($"O custo por hora da zona {zone} é agora {zoneChoice.CostPerHour}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"O tempo limite atual da zona {zone} é: {zoneChoice.TimeLimit} minutos. Insira o novo valor: ");
+                                    zoneChoice.TimeLimit = int.Parse(Console.ReadLine());
+                                    Console.WriteLine($"O tempo limite da zona {zone} é agora {zoneChoice.TimeLimit} minutos.");
+                                }
+
                             }
                         }
                         userChoice = 0;         //Foi dada esta atribuição para evitar que a opção de saida do Menu fosse igual à opção de saida do Programa. 

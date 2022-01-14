@@ -11,5 +11,4 @@ C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\bin\De
 C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.csproj.CoreCompileInputs.cache
 C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.exe
 C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.pdb
-C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.csproj.AssemblyReference.cache
-C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.csproj.SuggestedBindingRedirects.cache
+C:\Users\belez\OneDrive\Documentos\GitHub\Projeto-Parquimetro\Parquimetro\obj\Debug\Parquimetro.csprojAssemblyReference.cache
