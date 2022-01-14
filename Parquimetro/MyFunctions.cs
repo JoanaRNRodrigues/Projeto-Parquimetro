@@ -8,36 +8,48 @@ namespace Parquimetro
 {
     public static class MyFunctions
     {
-        public static int id;
-        public static bool needChange;
-        public static double totalGains;
+        private static int id;                                                       // id que identifica os objetos carro
+        
+        private static double totalGains;                                            // Variável que vai sendo incrementada consuante os valores que são ganhos num dado dia
+        public static double ID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
+        public static double TotalGains
+        { 
+            get { return totalGains; } 
+            set { totalGains = value; } 
+        }
         public static void giveChange(double change, double[] coins)
         {
-            //Esta função pede o valor do troco e imprime as moedas que iriam cair na máquina assim como o total de troco
+            //Esta função pede o valor de troco e imprime as moedas que iriam cair na máquina assim como o total de troco
 
             Console.WriteLine($"Troco: {change} euros");
-                        
-            for (int i = 0; i < coins.Length; i++)                //O i é o indice do array das coins
-            { 
+            totalGains -= change;
+           
+            for (int i = 0; i < coins.Length; i++)                // i é o indice do array das coins
+            {
                 while (change >= coins[i])
                 {
                     Console.WriteLine($"O Parquímetro devolve {coins[i]} euros");         //Imprime o valor de troco a dar ao utilizador
                     change -= coins[i];                                                   //O valor a dar de troco é deduzido.
                     change = Math.Round(change, 2);                                       //Arredonda o troco a duas casas decimais para evitar erro por arrendondamento
-                        
+
                 }
             }
-
+            
         }
-        
-        public static string Menu(string title, string[] options)                 //Função que constroi o aspeto dos Menus
+
+        public static string Menu(string title, string[] options)                   //Função que constroi o aspeto os Menus
         {
             string MenuType = "";
             MenuType += " ___________________________________\n" +           
                         "|                                   |\n" +
-                        $"|------    {title}";                             
+                        $"|------    {title}";
             //Função que controla o espaçamento no aspeto dos Menus para o sector do Titulo
-            for (int k = 0; k <= 18 - title.Length; k++)                      //Iniciou-se o K em 0 pois assumiu-se que o numero de caracteres do titulo começasse em 0.
+            //Iniciou-se o K em 0 pois assumiu-se que o numero de caracteres do titulo começasse em 0.
+            for (int k = 0; k <= 18 - title.Length; k++)                     
             {
                 MenuType += " ";
 
@@ -45,11 +57,11 @@ namespace Parquimetro
             MenuType += "------|\n";
 
             //Função que controla o espaçamento no aspeto dos Menus para o sector das Opções
-            for (int i = 0; i < options.Length; i++)                    //O i é o indice das opções
+            for (int i = 0; i < options.Length; i++)                    // i é o indice das opções
             {
-                MenuType += $"|          {i + 1}.{options[i]}";           // Imprime o número da opção e respetivo "valor"   
+                MenuType += $"|          {i + 1}.{options[i]}";           // Imprime o número da opção e o respetivo "valor"   
 
-                for (int j = 0; j <= 22 - options[i].Length; j++)          //Iniciou-se o J em 0 pois assumiu-se que o numero de caracteres das opções começasse em 0.
+                for (int j = 0; j <= 22 - options[i].Length; j++)         //Inicio o J em 0 pois assumiu-se que o numero de caracteres das opções começasse em 0.
                 {
                     MenuType += " ";
                 }
@@ -65,147 +77,65 @@ namespace Parquimetro
 
         public static double minutesCount(double change, Zone zone, double[] coins)
         {
+            // esta função recebe o dinheiro que o utilizador coloca na máquina, a zona em que será feito o estacionamento e um array com as diferentes moedas
+            // esta função retorna o número de minutos de estacionamento equivalentes ao valor que o utilizador inseriu, considerando o tempo máximo permitido por zona
             Time currentTime = new Time();
             double minutesParking;
-            if (change >= zone.MaxChange & zone.MaxChange > 0)
+            if (change >= zone.MaxChange & zone.MaxChange > 0)                      // caso a zona escolhida tenha limite de tempo e seja inserido demasiado dinheiro para esse tempo:
             {
-                minutesParking = zone.TimeLimit;
+                minutesParking = zone.TimeLimit;                                    // o valor máximo da zona será assumido e o restante dinheiro devolvido como troco
                 MyFunctions.giveChange(change - zone.MaxChange, coins);
-                needChange = true;
+                
                 return minutesParking;
             }
             else
             {
-                minutesParking = (60 * change) / zone.CostPerHour;  
+                minutesParking = (60 * change) / zone.CostPerHour;                  // caso contrário o dinheiro é convertido para o número de minutos equivalente
                 return minutesParking;
             }
         }
 
-        public static int[] zoneTime(double change, Zone zone, double[] coins)
+        public static void dayGains(double change, Zone zone)
         {
-            double parkingMinutes = minutesCount(change, zone, coins);
-            Time currentTime = new Time();
-            int exitMinute = (int)Math.Round(parkingMinutes) + currentTime.Minute;
-            int exitHour = currentTime.Hour;
-            int weekDay = currentTime.DayOfWeek;
-            int exitDay = currentTime.Day;
-            int exitMonth = currentTime.Month;
-            if (exitMinute >= 60)
-            {
-                int hours = exitMinute / 60;
-                exitHour = currentTime.Hour + hours;
-                exitMinute -= 60 * hours;
-            }
-
-
-            if (exitHour >= 20 & currentTime.DayOfWeek <= 5 || exitHour >= 14 & currentTime.DayOfWeek == 6)
-            {
-                if (zone.id < 2)
-                {
-                    Console.WriteLine("20h00 " + exitDay + "/" + exitMonth + "/" + currentTime.Year); 
-                }
-                else
-                {
-                    int excessHours = exitHour - 20;
-                    if (excessHours == 0)
-                    {
-                        exitHour = 9;
-                    }
-                    exitDay++;
-                    weekDay++;
-
-                    while (excessHours > 0)
-                    {
-                        while (weekDay <= 5)
-                        {
-                            if (excessHours >= 11)
-                            {
-                                excessHours -= 11;
-                                weekDay++;
-                                exitDay++;
-                            }
-                            else
-                            {
-                                exitHour = 9 + excessHours;
-                                excessHours = 0;
-                                break;
-                            }
-
-                        }
-                        if (weekDay == 6 & excessHours > 0)
-                        {
-                            if (excessHours >= 5)
-                            {
-                                excessHours -= 5;
-                                exitDay += 2;
-                                weekDay = 1;
-                            }
-                            else
-                            {
-                                exitHour = 9 + excessHours;
-                                excessHours = 0;
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime.Year);
-            }
-            if (zone.id == 2)
-            {
-                int[] daysMonth = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-                while (exitDay > daysMonth[exitMonth])
-                {
-                    exitDay -= daysMonth[exitMonth];
-                    exitMonth += 1;
-
-                }
-                Console.WriteLine("" + exitHour + "h" + exitMinute + " " + exitDay + "/" + exitMonth + "/" + currentTime.Year); 
-            }
-            int[] exitTime = { currentTime.Year, exitMonth, exitDay, exitHour, exitMinute, 0 };
-
-            return exitTime;
+            // esta funcção recebe um booleano que indica se numa transação foi necessário troco, o dinheiro inserido nessa transação e a zona de estacionamento
+            // ela incrementa na variável totalGains o dinheiro ganho na transação, para que seja possível consultar a faturação diária
+            totalGains += change;                                               
+                                                                                
         }
 
-        public static void dayGains(bool needChange,double change, Zone zone)
+        public static void exceedTime(Zone[] zones)
         {
-            if (needChange == false)
-            {
-                totalGains += change;
-            }
-            else
-            {
-                totalGains += (change - zone.MaxChange);
-            }
-        }
-
-        public static void exceedTime(Zone[] zones) //se for administrador
-        {
+            // esta função recebe o parametro zones que é um array das 3 zonas disponiveis
+            // determina se existe algum carro a exceder o tempo de estacionamento e notifica o administrador quando seleciona essa opção no menu
             Time now = new Time();
-            foreach (Zone zone in zones)
-            {
+            foreach (Zone zone in zones)                                            // para cada zona percorre os espaços de estacionamento e verifica se
+            {                                                                       // algum carro tem um limite de estacionamento que já tenha passado em relação a hora atual
                 for (int i = 0; i < zone.Spaces.Length; i++)
                 {
                     Car car = zone.Spaces[i];
                     if (car != null)
                     {
-                        if (car.parked == true && (car.time.Hour < now.Hour || (car.time.Hour == now.Hour && car.time.Minute < now.Minute)))
+                        if (car.Parked == true && (car.Time.Hour < now.Hour && car.Time.Day == now.Day || (car.Time.Hour == now.Hour && car.Time.Minute < now.Minute && car.Time.Day == now.Day)))
                         {
-                            Console.WriteLine($"O carro no lugar {i} da zona {zone.id} está a exceder o estacionamento");
+                            Console.WriteLine($"O carro no lugar {i} da zona {zone.ID} está a exceder o estacionamento");
                         }
                     }
                 }
             }
 
         }
-
-
-        public static double receivePayment (double[] coins)   //Função para selecionar as moedas
+        public static void changePrice(float newPrice, Zone zone)
+        {   // esta função altera o preço de uma dada zona
+            zone.CostPerHour=newPrice;
+        }
+        public static void changeTimeLimit(int newLimit, Zone zone)
+        {   //esta função altera o tempo limite de uma zona, exceto a terceira
+            zone.TimeLimit = newLimit;
+        }
+        public static double receivePayment(double[] coins)   //Função para selecionar as moedas
         {
             double insertedMoney = 0;
-            string[] coinsOptions = { "2 euros", "1 euro", "50 centimos", "20 centimos", "10 centimos", "5 centimos", "2 centimos", "1 centimo", "confirmar"};
+            string[] coinsOptions = { "2 euros", "1 euro", "50 centimos", "20 centimos", "10 centimos", "5 centimos", "2 centimos", "1 centimo", "confirmar" };
             string Payment = Menu("Pagamento", coinsOptions);
             Console.WriteLine(Payment);
             int moneySelected = int.Parse(Console.ReadLine());
@@ -214,16 +144,10 @@ namespace Parquimetro
                 insertedMoney = insertedMoney + coins[moneySelected - 1];
                 Console.WriteLine($"Montante atual: {insertedMoney}");
                 moneySelected = int.Parse(Console.ReadLine());
-                
+
             }
 
             return insertedMoney;
         }
-
-
-
-
-
     }
-
 }
